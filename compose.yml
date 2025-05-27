@@ -5,6 +5,7 @@ services:
     volumes:
       - .:/rails
       - bundle:/usr/local/bundle
+      - ./storage:/rails/storage
     ports:
       - "3000:3000"
     environment:

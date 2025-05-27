@@ -1,13 +1,8 @@
 Rails.application.routes.draw do
+  root 'questions#home'                      # トップページにスタートボタン
+  post '/start', to: 'questions#start'       # クイズ開始処理
 
-  # クイズ画面とチェック用ルート
-  get "questions/quiz"
-  get "questions/index"
-  post "questions/check", to: "questions#check"
-
-  # ヘルスチェック（そのままでOK）
-  get "up" => "rails/health#show", as: :rails_health_check
-
-  # ルート定義（トップページにするコントローラ）
-  root "questions#quiz"
+  get '/questions/:number', to: 'questions#show', as: 'question' # 各クイズ画面
+  post '/questions/answer', to: 'questions#answer'               # 回答処理
+  get '/questions/result', to: 'questions#result', as: 'questions_result' # 総評画面
 end
