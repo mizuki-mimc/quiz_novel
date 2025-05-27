@@ -1,0 +1,17 @@
+<h1>クイズ (ランダム7問)</h1>
+
+<%= form_with url: '/questions/check', method: :post do |f| %>
+  <% @questions.each_with_index do |question, index| %>
+    <div>
+      <p><strong>Q<%= index + 1 %>:</strong> <%= question.content %></p>
+      <% question.choices.each do |choice| %>
+        <label>
+          <%= radio_button_tag "answers[#{question.id}]", choice.id %>
+          <%= choice.content %>
+        </label><br>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= submit_tag "回答を送信" %>
+<% end %>
