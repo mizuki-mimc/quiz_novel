@@ -1,0 +1,11 @@
+<h2><%= @quiz.question %></h2>
+
+<%= form_with url: quiz_answer_path, method: :post do %>
+  <ul>
+    <li><%= radio_button_tag :answer, 1 %> <%= @quiz.choice1 %></li>
+    <li><%= radio_button_tag :answer, 2 %> <%= @quiz.choice2 %></li>
+    <li><%= radio_button_tag :answer, 3 %> <%= @quiz.choice3 %></li>
+    <li><%= radio_button_tag :answer, 4 %> <%= @quiz.choice4 %></li>
+  </ul>
+  <%= submit_tag "回答する" %>
+<% end %>

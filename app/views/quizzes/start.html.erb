@@ -1,0 +1,6 @@
+<h1>クイズへようこそ！</h1>
+<p>5問のクイズに挑戦しよう!</p>
+
+<%= form_tag quiz_begin_path, method: :post, data: { turbo: false } do %>
+  <%= submit_tag "クイズを始める" %>
+<% end %>
