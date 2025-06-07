@@ -1,0 +1,16 @@
+<h2><%= @quiz.question %></h2>
+
+<p>あなたの答え：<%= @quiz.send("choice#{@selected_answer}") %></p>
+<p>正解：<%= @quiz.send("choice#{@quiz.answer}") %></p>
+
+<% if @selected_answer == @quiz.answer %>
+  <p style="color: green;">正解！</p>
+<% else %>
+  <p style="color: red;">不正解。</p>
+<% end %>
+
+<p>解説：準備中</p>
+
+<%= form_with url: quiz_next_path, method: :post do %>
+  <%= submit_tag "次の問題へ" %>
+<% end %>

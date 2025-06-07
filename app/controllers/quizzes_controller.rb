@@ -36,24 +36,19 @@ class QuizzesController < ApplicationController
     quiz_ids = session[:quiz_ids]
     current_index = session[:current_index]
 
-    # 選択した答えを取得
+  # パラメータ取得
     selected_answer = params[:answer].to_i
 
-    # 今の問題のIDを取得
-    quiz = Quiz.find(quiz_ids[current_index])
-
-    # 答えの正誤をチェックしたり、スコアをセッションに保存したりも可能
-    # ここではシンプルに次の問題へ進む処理だけ書く
-
-    # current_index を次へ
-    session[:current_index] += 1
-
-    # 次の問題があれば問題ページへ、なければ結果ページへリダイレクト
-    if session[:current_index] >= quiz_ids.length
-      redirect_to quiz_results_path
-    else
-      redirect_to quiz_question_path
+  # 不正な回答チェック（セーフガード）
+    if selected_answer < 1 || selected_answer > 4
+      flash[:alert] = "回答を選択してください。"
+      redirect_to quiz_question_path and return
     end
+
+    @quiz = Quiz.find(quiz_ids[current_index])
+    @selected_answer = selected_answer
+
+    render :explanation
   end
 
   def next_question
@@ -62,6 +57,13 @@ class QuizzesController < ApplicationController
   end
 
   def results
-  # 仮のビュー表示
+    quiz_ids = session[:quiz_ids]
+    total_questions = quiz_ids.length
+
+  # 正解数のカウントをSessionに入れてた場合
+  # 例えば answerアクションで session[:correct_count] += 1 してた場合はこれが使える
+    correct_count = session[:correct_count] || 0
+
+    @score = correct_count * 100 / total_questions  # 例：100点満点に換算
   end
 end
